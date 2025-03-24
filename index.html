@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <title>EV Charging stations</title>
+    <title>EV ChargFinder </title>
     <style>
         html {
             font-family: Arial, Helvetica, sans-serif;
@@ -43,6 +43,12 @@
 
         img {
             max-width:100%;
+        }
+            .logo-circle {
+            width: 100px;  /* Adjust as needed */
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .mainimg{
@@ -174,10 +180,19 @@
             width: 100%;
             padding-left: 5%;
             padding-right:5%;
-            margin: auto;
+            margin: 0; /* Remove auto margin */
             display: flex;
             align-items: center;
-            background-color: 6A98B9;
+            background-color: #6A98B9;
+             /* Fix the position of the navbar */
+            top: 0; /* Align it to the top */
+            z-index: 1000; /* Ensure it stays above other content */
+            left: 0; /* Align it to the left */
+            right: 0; /* Align it to the right */
+        }
+        .navbar .container {
+            width: 100%; /* Ensure the container spans the full width */
+             /* Remove any margin */
         }
         .logo{
             width: 60px;
@@ -220,15 +235,60 @@
             padding-bottom: 8px;  
             margin: 2em;  
         }
+        .nav-item.nav-link {
+            border: 1px solid white; /* Add border to nav buttons */
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 0 10px; /* Increase distance between buttons */
+            transition: border-color 0.3s, background-color 0.3s; /* Add transition */
+        }
+        .nav-item.nav-link:hover {
+            border-color: #F8BEB8; /* Change border color on hover */
+            background-color: #343a40; /* Add background color on hover */
+        }
+        .btn-info {
+            border: 1px solid #17a2b8; /* Add border to other buttons */
+            border-radius: 5px;
+            transition: border-color 0.3s, background-color 0.3s; /* Add transition */
+        }
+        .btn-info:hover {
+            border-color: #138496; /* Change border color on hover */
+            background-color: #117a8b; /* Add background color on hover */
+        }
             
     </style>
+    <script>
+        function checkLogin() {
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                return true;
+            } else {
+                alert('Please login to access this feature');
+                return false;
+            }
+        }
+
+        function handleLogout() {
+            localStorage.setItem('isLoggedIn', 'false'); // Set login status to false
+            window.location.href = 'login.html'; // Redirect to login page
+        }
+
+        window.onload = () => {
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                document.querySelector('.nav-item.nav-link[href="login.html"]').style.display = 'none';
+                document.querySelector('.nav-item.nav-link[href="#"]').style.display = 'block';
+            } else {
+                document.querySelector('.nav-item.nav-link[href="login.html"]').style.display = 'block';
+                document.querySelector('.nav-item.nav-link[href="#"]').style.display = 'none';
+            }
+        };
+    </script>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="http://127.0.0.1:5500/index.html" target="_blank">
-                <img src="images/logo1.png" width="100" height="100" alt="">
+            <a class="navbar-brand" href="http://127.0.0.1:8080/index.html" target="_blank">
+                <img src="images/logo.png" width="100" height="100" alt="Logo" class="logo-circle">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -241,14 +301,11 @@
                     <a class="nav-item nav-link" href="#ports">AvailablePorts</a>
                     <a class="nav-item nav-link" href="#services">Services</a>
                     <a class="nav-item nav-link" href="#footer">Contact-us</a>
+                    <a class="nav-item nav-link" href="login.html">Login</a>
+                    <a class="nav-item nav-link" href="#" onclick="handleLogout()">Logout</a> <!-- Added Logout button -->
                 </div>
-
-                
-
             </div>
-            <div>
-    </nav>
-            <div>
+        </div>
     </nav>
 
     <!-- Optional JavaScript -->
@@ -333,7 +390,7 @@
     <h2 class="container2" id="ports">Available Charging Ports</h2>
     <div class="container1">
         <div class="image">
-            <img src="images/Stations available.png">
+            <img src="images\stations available.png">
         </div>
         <div class="text">
             <p>Level 1 chargers : They are easy to find and use, inexpensive, and reliable. For a single-family home, a Level 1 charger may meet drivers’ needs. Level 1 chargers charge at a rate of 4-5 miles per hour. They work best if a driver is able to plug in and let the vehicle charge overnight on a regular basis.</p>
@@ -359,7 +416,7 @@
                                 <h4><strong>Search stations</strong></h4>
                                 <p class="text">You can now search nearby charging stations from your current locations and can also
                                     see how many charging slots are available at that place.</p>
-                                <p><a class="btn btn-info" href="ev_search.html">Search Stations</a></p>
+                                <p><a class="btn btn-info" href="ev_search.html" onclick="return checkLogin()">Search Stations</a></p>
                             </div><!-- /.col-lg-4 -->
                             <div class="col-lg-4">
                                 <svg class="bd-placeholder-img rounded-circle" width="25" height="155"
@@ -369,7 +426,7 @@
                                 <h4><strong>Finding route</strong></h4>
                                 <p class="text">You can now search your destination path in the most simplest way from your current locations
                                     .This feature enables you to find the route on your finger tips.</p>
-                                <p><a class="btn btn-info" href="ev_routing.html">Find Route</a></p>
+                                <p><a class="btn btn-info" href="ev_routing.html" onclick="return checkLogin()">Find Route</a></p>
                             </div>
                             <div class="col-lg-4">
                                 <svg class="bd-placeholder-img rounded-circle" width="25" height="100"
@@ -381,7 +438,7 @@
                                 <p class="text">Get the taffic detection on your way to the destination.You can get information about the traffic status here.
                                     Enjoy ride! Travel safe! 
                                 </p>
-                                <p><a class="btn btn-info" href="traffic.html">Detect Traffic</a></p>
+                                <p><a class="btn btn-info" href="traffic.html" onclick="return checkLogin()">Detect Traffic</a></p>
                             </div><!-- /.col-lg-4 -->
                         </div><!-- /.row -->
                     </div>

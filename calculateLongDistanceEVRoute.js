@@ -60,6 +60,11 @@ CalculateLongDistanceEVRouteOptions.prototype.go = function() {
       return;
     }
 
+    if (!Array.isArray(options.locations) || options.locations.length < 2) {
+      reject('calculateLongDistanceEVRoute requires at least two locations.');
+      return;
+    }
+
     const url = formatUrl(options, reject);
     if (url == null)
       return;

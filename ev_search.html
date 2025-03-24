@@ -17,6 +17,7 @@
     html {
       margin: 0;
       padding: 0;
+      overflow: hidden; /* Hide the scrollbar */
     }
 
     #left,
@@ -25,23 +26,44 @@
     }
 
     #left {
-      float: left;
-      width: 200px;
-      overflow-y: auto;
+      width: 0; /* Hide the left section */
+      overflow: hidden; /* Hide overflow */
       background-color: rgb(255, 255, 251);
-
     }
 
     #right {
-      margin-left: 200px;
+      margin-left: 0; /* Remove margin */
+      width: 100%; /* Make the map take full width */
     }
 
     #map {
       width: 100%;
       height: 100%;
+      position: absolute; /* Ensure it covers the entire screen */
+      top: 0;
+      left: 0;
     }
 
-    #controls,
+    #controls {
+      padding: 5px;
+      width: 150px; /* Reduced width */
+      height: 150px; /* Set height to make it square */
+      position: fixed; /* Make it float on the screen */
+      top: 10px; /* Adjust as needed */
+      left: 10px; /* Adjust as needed */
+       /* Ensure background color */
+      z-index: 1000; /* Ensure it stays on top */
+    }
+
+    @media (max-width: 600px) {
+      #controls {
+        width: 100px; /* Adjust width for smaller screens */
+        height: 100px; /* Adjust height for smaller screens */
+        top: 5px; /* Adjust position for smaller screens */
+        left: 5px; /* Adjust position for smaller screens */
+      }
+    }
+
     #summary {
       padding: 5px;
     }
@@ -114,6 +136,29 @@
       padding: 5px 5px 5px 5px;
       
     }
+
+    .home-button {
+      display: none; /* Hidden by default */
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+      padding: 10px;
+      z-index: 1000;
+    }
+
+    .home-button img {
+      width: 40px;
+      height: 40px;
+    }
+
+    @media (max-width: 600px) {
+      .home-button {
+        display: block; /* Show on mobile devices */
+      }
+    }
   </style>
 </head>
 
@@ -128,7 +173,7 @@
       <br />
       <input type="button" class="btn" value="Find Stations" onclick="findLocation()" />
     </div>
-    <hr>
+<!--    <hr>
     <div class="mcom">
       <h3 class="text">EV Companies </h3>
       <br>
@@ -144,13 +189,16 @@
         <img src="https://amperevehicles.com/storage/images/logos/ampere_logo.svg" class="icom">
 
       </div>
-    </div>
+    </div>  -->
   </div>
    <div id="right">
     <div id="map" class="map"></div>
   </div> 
   <div class="clear" />
-
+  <!-- Floating Home Button -->
+  <a href="index.html" class="home-button">
+    <img src="images/logo11.jpg" alt="Home" />
+  </a>
   <script src="ev_search.js"></script>
 </body>
 
